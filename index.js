@@ -1,17 +1,21 @@
 const express = require('express')
+const authRouter = require('./routes/auth')
 const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 5000
+// required libs : mongoose | colors
+// run the following command
+// npm i mongoose colors
 
-// !important! 
-// you need to install the following libraries |express|[dotenv > if required]
-// or run this command >> npm i express dotenv 
+// const colors = require('colors');
+const mongoose = require('mongoose')
+mongoose.connect(process.env.URI )
+.then((res)=>console.log('> Mongodb Connected Connected...'))
+.catch(err=>console.log(`> Error while connecting to mongoDB : ${err.message}`.underline.red ))
 
-app.get('/' , (req , res)=>{
+app.use(authRouter);
 
-   res.json({"name":'sadid'})
 
-})
 
 
 
