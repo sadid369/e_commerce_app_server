@@ -31,6 +31,7 @@ adminRoute.post('/admin/delete-product', admin, async (req, res) => {
     const { id } = req.body
     try {
         await Product.findByIdAndDelete({ _id: id })
+
         res.json({ msg: 'Product Delete Successfully' })
     } catch (e) {
         res.status(500).json({ error: e.message })
