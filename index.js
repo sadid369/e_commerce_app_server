@@ -5,12 +5,14 @@ require('dotenv').config()
 const port = process.env.PORT || 5000
 const mongoose = require('mongoose')
 const adminRoute = require('./routes/admin')
+const productRouter = require('./routes/product')
 mongoose.connect(process.env.URI)
     .then((res) => console.log('> Mongodb Connected Connected...'))
     .catch(err => console.log(`> Error while connecting to mongoDB : ${err.message}`.underline.red))
 app.use(express.json())
 app.use(authRouter);
 app.use(adminRoute)
+app.use(productRouter)
 
 
 
