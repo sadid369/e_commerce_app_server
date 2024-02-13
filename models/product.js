@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ratingSchema = require('./rating');
 
 const productSchema = new mongoose.Schema(
     {
@@ -32,7 +33,7 @@ const productSchema = new mongoose.Schema(
             required: true
         },
 
-        //ratings
+        ratings: [ratingSchema]
     }
 );
 
