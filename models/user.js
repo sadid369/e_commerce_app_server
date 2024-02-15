@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { productSchema } = require('./product');
 
 // Declare the Schema of the Mongo model
 const userSchema = new mongoose.Schema({
@@ -41,8 +42,18 @@ const userSchema = new mongoose.Schema({
     type: {
         type: String,
         default: 'user',
-    }
-    //cart
+    },
+    cart: [
+        {
+            product: productSchema,
+            quantity: {
+                type: Number,
+                required: true
+            },
+        },
+    ]
+
+
 });
 
 //Export the model
