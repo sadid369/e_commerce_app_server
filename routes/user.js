@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth');
 const User = require('../models/user');
 
 const userRoute = express.Router()
-
+// api add to cart
 userRoute.post('/api/add-to-cart', auth, async (req, res) => {
     const { id } = req.body;
     console.log(id);
@@ -23,6 +23,7 @@ userRoute.post('/api/add-to-cart', auth, async (req, res) => {
                 }
 
             }
+
             console.log(isProductFound);
             if (isProductFound) {
                 let producttt = user.cart.find((productt) => productt.product._id.equals(product._id))
