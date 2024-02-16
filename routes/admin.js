@@ -14,7 +14,7 @@ adminRoute.post('/admin/add-product', admin, (req, res) => {
         product = product.save();
         res.json(product)
     } catch (error) {
-        res.status(500).json({ error: e.message })
+        res.status(500).json({ error: error.message })
     }
 
 })
@@ -24,7 +24,7 @@ adminRoute.get('/admin/get-product', admin, async (req, res) => {
         const products = await Product.find({});
         res.json(products)
     } catch (error) {
-        res.status(500).json({ error: e.message })
+        res.status(500).json({ error: error.message })
     }
 })
 adminRoute.post('/admin/delete-product', admin, async (req, res) => {
@@ -33,8 +33,8 @@ adminRoute.post('/admin/delete-product', admin, async (req, res) => {
         await Product.findByIdAndDelete({ _id: id })
 
         res.json({ msg: 'Product Delete Successfully' })
-    } catch (e) {
-        res.status(500).json({ error: e.message })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
 })
 
