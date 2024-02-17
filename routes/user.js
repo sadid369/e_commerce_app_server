@@ -64,12 +64,34 @@ userRoute.delete('/api/remove-from-cart/:id', auth, async (req, res) => {
         user = await user.save()
         res.json(user)
     } catch (error) {
-        res.status(500).json({ error: `here ${error.message}` })
+        res.status(500).json({ error: error.message })
     }
 
 })
 
+userRoute.post('/api/save-user-address', auth, async (req, res) => {
+    const { address } = req.body
+    try {
+        let user = await User.findById(req.userId)
+        user.address = address;
+        user = await user.save();
+        res.json(user)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 
+})
+userRoute.post('/api/order', auth, async (req, res) => {
+    const { cart, totalPrice, address } = req.body
+    try {
+        let products = []
+
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+
+})
 
 
 
