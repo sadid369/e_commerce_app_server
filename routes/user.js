@@ -2,6 +2,7 @@ const express = require('express')
 const { Product } = require('../models/product');
 const auth = require('../middlewares/auth');
 const User = require('../models/user');
+const Order = require('../models/order');
 
 const userRoute = express.Router()
 // api add to cart
@@ -85,7 +86,32 @@ userRoute.post('/api/order', auth, async (req, res) => {
     const { cart, totalPrice, address } = req.body
     try {
         let products = []
+        for (let i = 0; i < cart.length; i++) {
+            let product = await Product.findById(cart[i].product._id)
+            if (product.quantity >= cart[i].quantity) {
+                product.quantity -= cart[i].quantity
+                products.push({ product, quantity: cart[i].quantity })
+                await product.save()
+            } else {
+                return res.status(400).json({ msg: `${product.name} is out of stock` })
+            }
 
+
+        }
+        let user = await User.findById(req.userId)
+        user.cart = [];
+        user = await user.save();
+        console.log(`${totalPrice}, ${address}, ${req.userId}`);
+        let order = new Order({
+            products,
+            totalPrice,
+            address,
+            userId: req.userId,
+            orderedAt: new Date().getTime(),
+
+        })
+        order = await order.save()
+        res.json(order)
 
     } catch (error) {
         res.status(500).json({ error: error.message })
