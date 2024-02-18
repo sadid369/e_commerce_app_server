@@ -118,7 +118,15 @@ userRoute.post('/api/order', auth, async (req, res) => {
     }
 
 })
+userRoute.get('/api/orders/me', auth, async (req, res) => {
+    try {
+        let orders = await Order.find({ userId: req.userId })
+        res.json(orders)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 
+})
 
 
 module.exports = userRoute
